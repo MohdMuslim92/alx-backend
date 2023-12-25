@@ -14,6 +14,8 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
+        """Initialization
+        """
         self.__dataset = None
         self.__indexed_dataset = None
 
@@ -56,9 +58,9 @@ class Server:
 
         if index is None:
             index = 0
-        
+
         next_index = index + page_size
-        
+
         while index not in self.__indexed_dataset:
             index += 1
             next_index += 1
