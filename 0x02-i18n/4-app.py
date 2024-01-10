@@ -20,7 +20,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Determine the best language for the user"""
     forced_locale = request.args.get('locale')
     if forced_locale in app.config['LANGUAGES']:
@@ -29,7 +29,7 @@ def get_locale():
 
 
 @app.route('/')
-def index():
+def index() -> str:
     """Render index.html template with translatable text"""
     return render_template(
             '4-index.html',

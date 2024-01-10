@@ -4,6 +4,7 @@ authentication"""
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
+from typing import Union, Dict
 
 app = Flask(__name__)
 
@@ -28,7 +29,7 @@ users = {
 }
 
 
-def get_user(user_id):
+def get_user() -> Union[Dict, None]:
     """Retrieve user information"""
     return users.get(int(user_id))
 
@@ -37,14 +38,14 @@ app.before_request
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """Handle user authentication before processing requests"""
     user_id = request.args.get('login_as')
     g.user = get_user(user_id) if user_id else None
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Determine the best language for the user"""
     forced_locale = request.args.get('locale')
     if forced_locale in app.config['LANGUAGES']:
@@ -53,7 +54,7 @@ def get_locale():
 
 
 @app.route('/')
-def index():
+def index() -> str:
     """Render index.html template with user status"""
     user_status = _('not_logged_in')
     if g.user:
