@@ -43,6 +43,15 @@ def before_request():
     g.user = get_user(user_id) if user_id else None
 
 
+@babel.localeselector
+def get_locale():
+    """Determine the best language for the user"""
+    forced_locale = request.args.get('locale')
+    if forced_locale in app.config['LANGUAGES']:
+        return forced_locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
 @app.route('/')
 def index():
     """Render index.html template with user status"""
